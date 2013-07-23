@@ -1,0 +1,36 @@
+public class Solution {
+    public int[] plusOne(int[] digits) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(digits == null){
+            return null;
+        }
+        if(digits[digits.length - 1] < 9){
+            digits[digits.length -1]++;
+            return digits;
+        }
+        Stack<Integer> mres = new Stack<Integer>();
+        int preAdd = 0;
+        digits[digits.length - 1]++;
+        for(int i = digits.length - 1; i >= 0 ;i --){
+            digits[i] += preAdd; 
+            if(digits[i]  >= 10){
+                preAdd = 1;
+                digits[i] %= 10;
+            }else{
+                preAdd = 0;
+                
+            }
+            mres.push(digits[i]);
+        }
+        if(preAdd == 1){
+            mres.push(1);
+        }
+        int[] results = new int[mres.size()];
+        int num = 0;
+        while(!mres.empty()){
+            results[num++] = mres.pop();
+        }
+        return results; 
+    }
+}
