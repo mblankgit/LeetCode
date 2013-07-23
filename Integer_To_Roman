@@ -1,0 +1,64 @@
+public class Solution {
+    public String intToRoman(int num) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int tbit = num / 1000;
+        int hbit = num % 1000 / 100;
+        int dbit = num % 100 / 10;
+        int gbit = num  % 10 ;
+        StringBuilder result = new StringBuilder();
+        for(int i = 0 ; i < tbit;i++){
+            result.append("M");
+        }
+        ///for hundreds place
+        if(hbit == 9){
+            result.append("CM");
+        }else if(hbit >= 5){
+            result.append("D");
+            for(int i = hbit -5 ;i > 0 ; i--){
+                result.append("C");
+            }
+        }else if(hbit == 4){
+            result.append("CD");
+        }else{
+            for(int i = 0 ; i < hbit; i ++){
+                result.append("C");
+            }
+        }
+        
+        ///for decades place
+        if(dbit == 9){
+            result.append("XC");
+        }else if(dbit >= 5){
+            result.append("L");
+            for(int i = dbit -5 ;i > 0 ; i--){
+                result.append("X");
+            }
+        }else if(dbit == 4){
+            result.append("XL");
+        }else{
+            for(int i = 0 ; i < dbit; i ++){
+                result.append("X");
+            }
+        }
+        
+        /// unit
+        if(gbit == 9){
+            result.append("IX");
+        }else if(gbit >= 5){
+            result.append("V");
+            for(int i = gbit -5 ;i > 0 ; i--){
+                result.append("I");
+            }
+        }else if(gbit == 4){
+            result.append("IV");
+        }else{
+            for(int i = 0 ; i < gbit; i ++){
+                result.append("I");
+            }
+        }
+        
+        return result.toString();
+        
+    }
+}
