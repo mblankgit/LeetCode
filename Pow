@@ -1,0 +1,32 @@
+public class Solution {
+    public double pow(double x, int n) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+       if(n == 0){
+           return 1;
+       }else if(x == 1 ||  n == 1){
+           return x;
+       }else if(n == -1){
+           return 1 / x;
+       }
+       int less = 0;
+       if(n < 0 ){
+           less = 1;
+           n = -1 * n;
+       }
+       double tmp = pow(x,n/2);
+       if(n % 2 != 0){
+           if(less == 1){
+               return 1/ x / tmp / tmp;
+           }else{
+               return  x * tmp * tmp;
+           }
+       }else{
+           if(less == 1){
+               return 1 /  tmp/ tmp;
+           }else{
+               return tmp * tmp;
+           }
+       }        
+    }
+}
