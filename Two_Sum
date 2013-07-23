@@ -2,43 +2,20 @@ public class Solution {
     public int[] twoSum(int[] numbers, int target) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        quickSort(numbers);
+        Map<Integer,Integer> checks = new HashMap<Integer,Integer>();
         int[] results = new int[2];
-        int len = numbers.length ;
-        for(int i = 0 ; i < len  && numbers[i] < target / 2 + 1; i ++){
-            int ntar = target - numbers[i];    
-            int end = binarySearch(numbers,i + 1 , target);
-            if( end > 0){
-                results[0] = i + 1;
-                results[1] = end + 1;
-                return results;
+        if(numbers == null || numbers.length == 0){
+            return null;
+        }
+        for(int i = 0 ; i < numbers.length; i++){
+            if(checks.containsKey(numbers[i])){
+                int index = checks.get(numbers[i]);
+                results[0] = index + 1;
+                results[1] = i + 1;
+            }else{
+                checks.put(target - numbers[i],i);
             }
         }
         return results;
-    }
-    
-    int binarySearch(int[] num , int start, int target){
-        int low = start;
-        int high = num.length -1;
-        while(high - 1 > low){
-            int mid = low + (high - low) / 2;
-            if(num[mid] == target){
-                return mid;
-            }else if(num[mid] > target){
-                high = mid;
-            }else{
-                low = mid;
-            }
-        }
-        if(num[high] == target ){
-            return high;
-        }else if(num[low] == target){
-            return low;
-        }
-        return -1;
-    }
-    
-    void quickSort(int[] numbers){
-        
     }
 }
