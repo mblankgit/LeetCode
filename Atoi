@@ -1,0 +1,65 @@
+public class Solution {
+    public int atoi(String str) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(str == null || str.length() == 0){
+            return 0;
+        }
+        int result = 0;
+        int index = 0;
+        int limit = -Integer.MAX_VALUE;
+        boolean positive = true;
+        while(index < str.length() && str.charAt(index) == ' '){
+            index++;
+        }
+        /// all is blank
+        if(index == str.length()){
+            return 0;   
+        }
+        //start with not number and not symbol
+        if(!check(str.charAt(index))){
+            return 0;
+        }
+        if(str.charAt(index) == '-'){
+            index++;
+            positive = false;
+            limit = Integer.MIN_VALUE;
+        }else if(str.charAt(index) =='+'){
+            index++;
+        }
+        while(index < str.length()){
+            if(str.charAt(index) >= '0' && str.charAt(index) <= '9'){
+                int value = (int)(str.charAt(index)) - '0';
+                int tmp = result;
+                result = result * 10 + value;
+                //for condition 
+                // 1. result = 214748364 when result * 10 + value if value > 7 then result will be negative
+                // 2. result = 1111111110 when result * 10 + value ,result will be a positive number but not 10 times
+                if(positive && (result < 0 || (result - value ) / 10 != tmp)){
+                    return Integer.MAX_VALUE;
+                }else if(!positive && (result < 0 || (result - value ) / 10 != tmp)){
+                    return Integer.MIN_VALUE;
+                }
+
+            }else{
+                break;
+            }
+            index++;
+        }
+       
+        if(!positive){
+            result =  -1 * result;
+        }
+        return result;
+        
+    }
+    
+    boolean check(char str){
+ 
+        if(str == '+' || str == '-' || str <='9' && str >= '0'){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
