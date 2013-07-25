@@ -1,0 +1,66 @@
+public class Solution {
+    
+    public ArrayList<String> letterCombinations(String digits) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        //dfs
+        if(digits == null || digits.length() == 0){
+            ArrayList<String> results = new ArrayList<String>();
+            results.add("");
+            return results;
+        }    
+        char[] strs = digits.toCharArray();
+        return fullArray(strs,0);
+    }
+    
+    ArrayList<String> fullArray(char[] strs, int start){
+        ArrayList<String> results = new ArrayList<String>();
+        if(start == strs.length){
+            results.add("");
+            return results;
+        }
+        int num = strs[start] - '0';
+        char[] chs = getChars(num);
+        ArrayList<String> subs = fullArray(strs,start + 1);
+        for(char ch : chs){
+            for(String sub : subs){
+                results.add(ch + sub);
+            }
+        }
+        return results;
+        
+    }
+    
+    //change num to char[]
+    char[] getChars(int num){
+        if(num <= 6 ){
+            int start = (num - 2 ) * 3;
+            char[] results = new char[3];
+            for(int i = 0 ; i < 3; i++){
+                results[i] = (char)('a' + start + i);
+            }
+            return results;
+        }else if(num == 7){
+            char[] results = new char[4];
+            results[0] = 'p';
+            results[1] = 'q';
+            results[2] = 'r';
+            results[3] = 's';
+            return results;
+        }else if(num == 8){
+            char[] results = new char[3];
+            results[0] = 't';
+            results[1] = 'u';
+            results[2] = 'v';
+            return results;
+        }else if(num == 9){
+            char[] results = new char[4];
+            results[0] = 'w';
+            results[1] = 'x';
+            results[2] = 'y';
+            results[3] = 'z';
+            return results;
+        }
+        return null;
+    }   
+}
