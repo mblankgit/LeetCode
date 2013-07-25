@@ -1,0 +1,59 @@
+public class Solution {
+    public int removeElement(int[] A, int elem) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(A == null || A.length == 0){
+            return 0;
+        }
+        int remove = 0;
+        int head = A.length ;
+        int tail = A.length ;
+        /// set tail  to first not elem item from end to start
+        /// set head to first elem item from end to start
+        head = getNextHead(A,elem,head);
+        tail = getNextTail(A,elem,tail);
+        if(head < 0){
+            return 0;
+        }else if(head == 0){
+            return 1;
+        }
+        if(tail < 0){
+            return A.length ;
+        }
+        int nlen = head + 1;    
+        while(tail >= 0 && head >= 0){
+            if(A[tail] == elem && head > tail){
+                A[tail] = A[head];
+                tail = getNextTail(A,elem,tail);
+                head = getNextHead(A,elem,head);
+                remove ++;
+            }else if(A[tail] == elem && head < tail){
+                tail = getNextTail(A,elem,tail);
+            }
+        }
+        
+        return nlen - remove;
+    }
+        
+    int getNextHead(int[] num , int target, int index){
+        index --;
+        while(index >= 0){
+            if(num[index] != target){
+                return index;
+            }
+            index--;
+        }
+        return index;
+    }
+    
+    int getNextTail(int[] num , int target, int index){
+        index --;
+        while(index >= 0){
+            if(num[index] == target){
+                return index;
+            }
+            index--;
+        }
+        return index;
+    }   
+}
