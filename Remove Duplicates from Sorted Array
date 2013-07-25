@@ -1,0 +1,45 @@
+public class Solution {
+    public int removeDuplicates(int[] A) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(A == null || A.length <= 1){
+            return A.length;
+        }
+        int head = 0;
+        int tail = getNextTail(A,0,A[0]);
+        
+        if(tail < 0 ){
+            return 1;
+        }
+        int last = A[head];
+        while(tail < A.length && tail > 0 && head < A.length){
+            if(head == 0){
+                head++;
+                continue;
+            }
+            if(tail == head){
+                tail = getNextTail(A,head,A[head]);
+            }
+            
+            if(A[head] <= A[head - 1] && tail > head){
+                A[head] = A[tail];
+                tail = getNextTail(A,tail,A[tail]);
+            }
+            head++;
+        }
+        return head ;
+        
+    }
+    
+    
+    int getNextTail(int[] num,int start,int target){
+        while(start < num.length && num[start] == target){
+            start++;
+        }
+        if(start >= num.length){
+            return -1;
+        }else{
+            return start;
+        }
+    }
+}
