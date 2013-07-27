@@ -1,0 +1,52 @@
+public class Solution {
+    public int removeDuplicates(int[] A) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(A == null ){
+            return 0;
+        }else if(A.length <= 2){
+            return A.length;
+        }
+        
+        int head = 0;
+        int tail = 1;
+        int times = 2;
+        
+        head = findFirst(A);
+        if(head == -1){
+            return A.length;
+        }
+        
+        for(tail = head + 1; tail < A.length; tail++){
+            if( A[tail] > A[head - 1]){
+                times = 1;
+                A[head] = A[tail];
+                head++;
+            }else if(A[tail] == A[head - 1] && times == 1){
+                A[head] = A[tail];
+                times++;
+                head++;
+            }
+        }       
+        
+        return head ;
+    }
+    
+    int findFirst(int[] num){
+        int last = num[0];
+        int times = 1;
+        for(int i = 1 ; i < num.length; i ++){
+            if(num[i] == last){
+                if(times < 2){
+                    times++;
+                }else{
+                    return i;
+                }
+            }else{
+                times = 1;
+                last = num[i];
+            }
+        }
+        return -1;
+    }
+}

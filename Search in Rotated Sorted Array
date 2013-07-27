@@ -1,0 +1,63 @@
+public class Solution {
+    public int search(int[] A, int target) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int low = 0; 
+        int high = A.length - 1;
+        
+        
+        
+        while(high - 1 > low){
+            
+            if(target == A[low]){
+                return low;
+            }else if(target == A[high]){
+                return high;
+            }else if(A[low] > target && A[high] < target){
+                return -1;
+            }
+            
+            
+            int mid = low + (high - low) / 2;
+            if(target == A[mid]){
+                return mid;
+            }
+            ///in same range
+            if(A[low] < A[high]){
+                if(A[mid] > target){
+                    high = mid;
+                }else{
+                    low = mid;
+                }
+            }else{
+                //not in the same range
+                if(target > A[low] && target > A[high]){
+                    if(A[mid] < target && A[mid] > A[low]){
+                        low = mid;
+                    }else if(A[mid] > target){
+                        high = mid;
+                    }else if(A[mid] < target && A[mid] < A[high]){
+                        high = mid;
+                    }
+                }else if(target <A[low] && target < A[high]){
+                    if(A[mid] > target){
+                        if(A[mid] < A[low]){
+                            high = mid;
+                        }else{
+                            low = mid;
+                        }
+                    }else{
+                        low = mid;
+                    }
+                }
+            }
+        }
+        
+        if(A[low] == target){
+            return low;
+        }else if(A[high] == target){
+            return high;
+        }
+        return -1;
+    }
+}
