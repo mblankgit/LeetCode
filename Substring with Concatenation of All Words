@@ -1,0 +1,46 @@
+public class Solution {
+    public ArrayList<Integer> findSubstring(String S, String[] L) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<Integer> results = new ArrayList<Integer>();
+        if(S == null || L == null || L.length == 0){
+            return results;
+        }
+        Map<String,Integer> words = new HashMap<String,Integer>();
+        for(String l : L){
+            if(words.containsKey(l)){
+                words.put(l,words.get(l) + 1);
+            }else{
+                words.put(l,1);
+            }
+        }
+        
+        int head = 0;
+        int N = L.length;
+        int len = L[0].length();
+        
+        for(int i = 0 ; i <= S.length() - N * len ; i++){
+            boolean check = true;
+            Map<String,Integer> tmps = new HashMap<String,Integer>();
+            for(int j = 0 ; j < N ; j++){
+                String word = S.substring(i + j * len,i + j* len + len);
+                if(!words.containsKey(word)){
+                    check = false;
+                    break;
+                }else if(tmps.containsKey(word)){
+                    tmps.put(word,tmps.get(word) +1);
+                }else{
+                    tmps.put(word,1);
+                }
+                if(tmps.get(word) > words.get(word)){
+                    check = false;
+                    break;
+                }
+            }
+            if(check ){
+                results.add(i);
+            }
+        }
+        return results;
+    }
+}

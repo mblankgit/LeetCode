@@ -1,0 +1,73 @@
+public class Solution {
+    public ArrayList<ArrayList<Integer>> threeSum(int[] num) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        Set<String> has = new HashSet<String>();
+        ArrayList<ArrayList<Integer>> results = new ArrayList<ArrayList<Integer>>();
+        if(num == null || num.length < 3){
+            return results;
+        }
+        for(int i = 0 ; i<= num.length -3 ; i++){
+            int left = 0 - num[i];
+            find(num,left,i+1,results,has);
+        }
+        return results;
+    }
+    
+    void find(int[] num, int left, int start, ArrayList<ArrayList<Integer>> results,Set<String> has){
+        if(start >= num.length ){
+            return;
+        }
+        
+        Set<Integer> index = new HashSet<Integer>();
+        for(int i = start; i < num.length;i++){
+            if(index.contains(num[i])){
+                ArrayList<Integer> tmps = new ArrayList<Integer>();
+                sort(0-left,left - num[i],num[i],results,has);
+                index.remove(num[i]);
+            }else{
+                index.add(left - num[i]);
+            }
+        }
+    }
+    
+    void sort(int a , int b ,int c,ArrayList<ArrayList<Integer>> results,Set<String> has){
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        int big = a > b? a : b;
+        int small=0;
+        big = big > c? big : c;
+        int mid=0;
+        if(big == a){
+            if(b > c){
+                mid = b;
+                small = c;
+            }else{
+                mid = c;
+                small = b;
+            }
+        }else if(big ==b){
+            if(a > c){
+                mid = a; 
+                small =c;
+            }else{
+                mid = c;
+                small = a;
+            }
+        }else if(big == c){
+            if(a > b){
+                mid = a; 
+                small =b;
+            }else{
+                mid = b;
+                small = a;
+            }
+        }
+        result.add(small);
+        result.add(mid);
+        result.add(big);
+        if(!has.contains(small + " " + big)){
+            results.add(result);       
+            has.add(small + " " + big);
+        }
+    }
+}
