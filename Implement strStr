@@ -1,0 +1,38 @@
+public class Solution {
+    public String strStr(String haystack, String needle) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(needle.length() == 0){
+            return haystack;
+        }else if(haystack.length() < needle.length()){
+            return null;
+        }
+        
+        int i = 0;
+        while(i <= haystack.length() - needle.length()){
+            if(haystack.charAt(i) == needle.charAt(0)){
+                if(checkContains(haystack,i,needle)){
+                    return haystack.substring(i);
+                };
+            }
+            i++;
+        }
+        return null;
+    }
+    
+    boolean checkContains(String org, int start, String src){
+        if(org.length() -start < src.length()){
+            return false;
+        }
+        if(start >= org.length()){
+            return false;
+        }
+        int j = 0;
+        for(int i = start ; i < org.length() && j < src.length();i++,j++){
+            if(org.charAt(i) != src.charAt(j)){
+                return false;
+            }
+        }
+        return true;
+    }
+}
