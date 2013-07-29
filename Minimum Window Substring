@@ -1,0 +1,62 @@
+public class Solution {
+    public String minWindow(String S, String T) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(S == null || T == null){
+            return null;
+        }else if(T.length() == 0 || T.length() > S.length()){
+            return "";
+        }
+        
+        int[] needToFind = new int[256];
+        int[] hasFind = new int[256];
+        
+        for(int i = 0 ; i< T.length();i++){
+            needToFind[(int)T.charAt(i)]++;
+        }
+        int min = Integer.MAX_VALUE;
+        int start = 0;
+        int end = 0;
+        int head = 0 ; 
+        int tail = 0;
+        int find = 0;
+        
+        while(tail < S.length()){
+            if(needToFind[(int)S.charAt(tail)] ==0){
+                tail++;
+                continue;
+            }
+            
+            hasFind[(int)S.charAt(tail)]++;
+            if(hasFind[(int)S.charAt(tail)] <= needToFind[(int)S.charAt(tail)]){
+                find++;
+            }
+            
+            if(find == T.length()){
+                while(needToFind[(int)S.charAt(head)] == 0 ||
+                        hasFind[(int)S.charAt(head)] > needToFind[(int)S.charAt(head)]){
+                    if( hasFind[(int)S.charAt(head)] > needToFind[(int)S.charAt(head)]){
+                         hasFind[(int)S.charAt(head)]--;
+                    }
+                    head++;
+                }
+                if(tail - head + 1 < min){
+                    min = tail - head + 1;
+                    start = head;
+                    end = tail;
+                }
+            }
+            tail++;
+        }
+        
+        if(start == 0 && end ==0){
+            if(T.length() == 1 && S.charAt(0) == T.charAt(0)){
+                return T;
+            }else{
+                return "";
+            }
+        }
+        
+        return S.substring(start,end + 1);            
+    }
+}
