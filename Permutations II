@@ -1,0 +1,42 @@
+public class Solution {
+    public ArrayList<ArrayList<Integer>> permuteUnique(int[] num) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<ArrayList<Integer>> results = new ArrayList<ArrayList<Integer>>();
+        if(num == null || num.length == 0){
+            return results;
+        }
+        ArrayList<Integer> nows= new ArrayList<Integer>();
+        getPermute(num,0,nows,results);
+        return results;
+    }
+    
+    void getPermute(int[] num, int start,ArrayList<Integer> nows,ArrayList<ArrayList<Integer>> results){
+        if(num.length == start){
+            results.add(new ArrayList<Integer>(nows));
+            return;
+        }
+        
+        Set<Integer> checks = new HashSet<Integer>();
+        for(int i = 0 ; i < num.length - start;i++){
+            if(checks.contains(num[start + i])){
+                continue;
+            }
+            checks.add(num[start + i]);
+            swap(num,start,start+i);
+            nows.add(num[start]);
+            getPermute(num,start+1,nows,results);
+            nows.remove(nows.size() - 1);
+            swap(num,start,start+i);
+        }
+        
+    }
+    
+    void swap(int[] num,int i , int j){
+        int tmp = num[i];
+        num[i] = num[j];
+        num[j] = tmp;
+    }
+    
+    
+}

@@ -1,0 +1,73 @@
+public class Solution {
+    public ArrayList<String> generateParenthesis(int n) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<String> results = new ArrayList<String>();
+        if(n == 0){
+            return results;
+        }else if(n == 1){
+            results.add("()");
+            return results;
+        }
+        
+        char[] ins = new char[2*n];
+        for(int i = 0 ; i < 2*n -1;i+=2){
+            ins[i] = '(';
+            ins[i+1] = ')';
+        }    
+        getAll(ins,"",results);
+        return results;
+    }
+    
+    
+    void getAll(char[] input,String now,ArrayList<String> results){
+        if(input.length == 0 ){
+            if(check(now) ){
+                results.add(now);
+            }
+            return;
+        }
+        Set<Character> has = new HashSet<Character>();
+        for(int i = 0 ; i < input.length;i++){
+            if(has.contains(input[i])){
+                continue;
+            }
+            has.add(input[i]);
+            char[] nin = getNInput(input,i);
+            getAll(nin,input[i]+now,results);
+        }
+        return;
+    }
+    
+    char[] getNInput(char[] input,int n){
+        char[] nin = new char[input.length - 1];
+        if(input.length == 1){
+            return nin;
+        }       
+        int k = 0;
+        for(int i = 0; i < input.length; i ++){
+            if(i != n){
+                nin[k++] = input[i];
+            }
+        }
+        return nin;
+    }
+    
+    boolean check(String input){
+        Stack<Character> checks = new Stack<Character>();
+        for(int i = 0 ; i < input.length();i++){
+            if(input.charAt(i) == '('){
+                checks.push('(');
+            }else{
+                if(checks.empty()){
+                    return false;
+                }
+                char ch = checks.pop();
+                if(ch !='('){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }   
+}

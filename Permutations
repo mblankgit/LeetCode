@@ -1,0 +1,38 @@
+public class Solution {
+    public ArrayList<ArrayList<Integer>> permute(int[] num) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<ArrayList<Integer>> results = new ArrayList<ArrayList<Integer>>();
+        
+        if(num == null || num.length ==0){
+            return results;
+        }
+        ArrayList<Integer> now = new ArrayList<Integer>();
+        getPermute(num,0,now,results);
+        return results;
+    }
+    
+    
+    void getPermute(int[] num,int start,ArrayList<Integer> now,ArrayList<ArrayList<Integer>> results){
+        if(num.length == start){
+            //if add now , only the reference added. the value will change!!
+            results.add(new ArrayList<Integer>(now));
+            return;
+        }
+        
+        for(int i = 0 ; i < num.length - start; i++){
+            swap(num,start,start + i);
+            now.add(num[start]);
+            getPermute(num,start+ 1,now,results);
+            now.remove(now.size() - 1);
+            swap(num,start,start+i);
+        }
+        return;
+    }
+    
+    void swap(int[] num, int i , int j){
+        int tmp = num[i];
+        num[i] = num[j];
+        num[j] = tmp;
+    }
+}

@@ -1,0 +1,25 @@
+public class Solution {
+    public ArrayList<ArrayList<Integer>> generate(int numRows) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<ArrayList<Integer>> results = new ArrayList<ArrayList<Integer>>();
+        
+        
+        for(int i = 0 ;i  < numRows;i++){
+            ArrayList<Integer> now = new ArrayList<Integer>();
+            for(int j = 0 ; j < i + 1; j++){
+                if(i == 0){
+                    now.add(1);
+                    break;
+                }
+                if( j - 1 >= 0 && j < results.get(i -1).size()){
+                    now.add(results.get(i - 1 ).get(j) + results.get(i - 1 ).get(j - 1));
+                }else{
+                    now.add(1);
+                }
+            }
+            results.add(now);
+        }
+        return results;
+    }
+}
