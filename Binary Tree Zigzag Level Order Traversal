@@ -1,0 +1,62 @@
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ArrayList<ArrayList<Integer>> zigzagLevelOrder(TreeNode root) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<ArrayList<Integer>> results = new ArrayList<ArrayList<Integer>>();
+        if(root == null){
+            return results;
+        }
+        
+        Queue<TreeNode> qus = new LinkedList<TreeNode>();
+        
+        int level = 0;
+        int cnum = 1;
+        int nnum = 0;
+        qus.add(root);
+        ArrayList<Integer> nodes = new ArrayList<Integer>();
+        Stack<Integer> sts = new Stack<Integer>();
+        
+        while(qus.peek()!=null){
+            TreeNode node = qus.poll();
+            cnum--;
+            if(level % 2==0){
+                nodes.add(node.val);
+            }else{
+                sts.push(node.val);
+            } 
+            if(node.left!=null){
+                qus.add(node.left);
+                nnum++;
+            }
+            if(node.right != null){
+                qus.add(node.right);
+                nnum++;
+            }
+            if(cnum == 0){
+                if(level % 2 == 0){
+                    results.add(nodes);
+                }else{
+                    while(!sts.empty()){
+                        nodes.add(sts.pop());
+                    }
+                    results.add(nodes);
+                    sts.clear();
+                }
+                nodes = new ArrayList<Integer>();
+                cnum = nnum;
+                nnum = 0;
+                level++;
+            }
+        }
+       return results; 
+    }
+}

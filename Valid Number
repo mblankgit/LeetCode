@@ -1,0 +1,79 @@
+public class Solution {
+    public boolean isNumber(String s) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(s == null || s.length() == 0){
+            return false;
+        }else if(s.length() == 1){
+            if(s.charAt(0) < '0' || s.charAt(0) >'9'){
+                return false;
+            }
+        }
+        int head = 0;
+        int tail = s.length() -1;
+        while(head < s.length() && s.charAt(head) == ' '){
+            head++;
+        }
+        while(tail >= 0 &&  s.charAt(tail) == ' '){
+            tail--;
+        }
+        if(head > tail){
+            return false;
+        } 
+        for(int i = head; i <= tail ; i ++){
+            if(s.charAt(i) == 'e'){
+                return isNumber(s,head,i-1) && trueNum(s,i+1,tail);
+            }
+        }
+        return isNumber(s,head,tail);
+    }
+    
+    boolean isNumber(String s, int head, int tail){
+        if(s == null  || head > tail){
+            return false;
+        }
+        boolean symbol = false;
+        boolean number = false;
+        boolean dot = false;
+        if(s.charAt(head) == '+' || s.charAt(head) == '-'){
+            symbol = true;
+            head++;
+        }
+        for(int i = head; i <= tail ;i++){
+            if(s.charAt(i) <'0' || s.charAt(i) > '9'){
+                if(s.charAt(i) == '.' && !dot){
+                    dot = true;
+                }else{
+                    return false;
+                }
+            }
+            if(s.charAt(i) >= '0' && s.charAt(i) <='9'){
+                number = true;
+            }
+        }
+        if(number){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    boolean trueNum(String s,int head,int tail){
+        if(s == null || s.length() == 0 || head > tail){
+            return false;
+        }else{
+            if(s.charAt(head) == '+' || s.charAt(head) == '-'){
+                head++;
+            }
+            if(head > tail){
+                return false;
+            }
+            for(int i = head ; i <= tail;i++){
+                if(s.charAt(i) <'0' || s.charAt(i) > '9'){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}

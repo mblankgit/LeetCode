@@ -1,0 +1,35 @@
+public class Solution {
+    public int lengthOfLastWord(String s) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(s == null || s.length() == 0){
+            return 0;
+        }
+        
+        //String[] its = s.split(" ");
+        //if(its.length == 0){
+        //    return 0;
+        //}else{
+        //    return its[its.length -1].length();
+        //}
+        boolean blank = false;
+        int last = 0;
+        int len = 0;
+        for(int i = 0 ; i < s.length();i++){
+            if(s.charAt(i) != ' '){
+                len++;
+                blank = true;
+            }else if(s.charAt(i) == ' '){
+                if(blank && len != 0){
+                    last = len;
+                }
+                len = 0;
+            }
+            if(len != 0){
+                last = len;
+            }
+        }
+        return last;
+        
+    }
+}

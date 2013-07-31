@@ -1,0 +1,30 @@
+public class Solution {
+    public void merge(int A[], int m, int B[], int n) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int lena = m ;
+        int lenb = n ;
+        int last = lena + lenb - 1;
+        
+        lena--;
+        lenb--;
+        
+        while(lena >= 0 || lenb >= 0){
+            int min = Integer.MIN_VALUE;
+            if(lena >= 0 && A[lena] > min){
+                min = A[lena];
+            }
+            if(lenb >= 0 && B[lenb] > min){
+                min = B[lenb];
+            }
+            while(lena >= 0 && A[lena] == min){
+                A[last --] = min;
+                lena--;
+            }
+            while(lenb >= 0 && B[lenb] == min){
+                A[last--] = min;
+                lenb--;
+            }
+        }
+    }
+}

@@ -1,0 +1,35 @@
+public class Solution {
+    public void rotate(int[][] matrix) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(matrix == null){
+            return;
+        }
+        int n = matrix.length;
+        int startx = 0; 
+        int starty = 0;        
+        int times = n / 2;
+        while(times > 0){
+            int len = 2 * times - 1;
+            if(n % 2 != 0){
+                len++;
+            }
+            for(int i = 0 ; i< len;i++){
+                startx = n/2 - times + 0;
+                starty = n/2 - times + i;
+                int tmp = matrix[startx][starty];
+                for(int j = 0; j < 4;j++){
+                    int nx = starty;
+                    int ny = n - 1 - startx;
+                    int t = tmp;
+                    tmp = matrix[nx][ny];
+                    matrix[nx][ny] = t;
+                    startx = nx;
+                    starty = ny;
+                }
+            }
+            times--;
+        }
+        return;
+    }
+}
