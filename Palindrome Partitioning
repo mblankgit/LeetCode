@@ -1,0 +1,43 @@
+public class Solution {
+    public ArrayList<ArrayList<String>> partition(String s) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<ArrayList<String>> results = new ArrayList<ArrayList<String>>();
+        if(s.length() == 0){
+            return results;
+        }
+        ArrayList<String> paths = new ArrayList<String>();
+        partition(s,0,paths,results);
+        return results;        
+    }
+    
+    void partition(String s, int index,ArrayList<String> paths,ArrayList<ArrayList<String>> results){
+        if(index == s.length() ){
+            results.add(new ArrayList<String>(paths));
+            return;
+        }
+        
+        for(int i = index; i< s.length();i++){
+            if(valid(s,index,i)){
+                paths.add(s.substring(index,i+1));
+                partition(s,i+1,paths,results);
+                paths.remove(paths.size() -1);
+            }
+        }
+        return;
+    }
+    
+    boolean valid(String s,int head,int tail){
+        if(head>tail){
+            return false;
+        }
+        while(head < tail){
+            if(s.charAt(head) != s.charAt(tail)){
+                return false;
+            }
+            head++;
+            tail--;
+        }
+        return true;
+    }
+}

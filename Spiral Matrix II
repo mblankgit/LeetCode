@@ -1,0 +1,52 @@
+public class Solution {
+    public int[][] generateMatrix(int n) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int[][] results = new int[n][n];
+        if(n == 0){
+            return results;
+        }
+        int value = 1;
+        int level = 0;
+        int times = n / 2;
+        if(n % 2 != 0){
+            times++;
+        }
+        while(level < times){
+            int startx = level;
+            int starty = level;
+            int len = n - 1;
+            if(len == 0){
+                results[level][level] = value;
+                level++;
+                continue;
+            }
+            ///top left to right
+            for(int i = 0 ;i < len;i++){
+                results[startx][starty + i] = value;
+                value++;
+            }
+            starty += len;
+            /// top right to down
+            for(int i = 0 ; i < len;i++){
+                results[startx + i][ starty ] = value;
+                value++;
+            }
+            startx += len;
+            /// down right to left
+            for(int i = 0 ; i < len;i++){
+                results[startx][starty - i] = value;
+                value++;
+            }
+            starty -= len;
+            ///down right to top
+            for(int i = 0 ;i < len;i++){
+                results[startx - i][ starty] = value;
+                value++;
+            }
+            level++;
+            n = n - 2;
+        }
+        return results;        
+    }
+}

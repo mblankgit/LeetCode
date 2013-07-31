@@ -1,0 +1,39 @@
+public class Solution {
+    public int firstMissingPositive(int[] A) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(A.length == 0){
+            return 1;
+        }
+        int N = A.length;
+        
+        for(int k = 0 ; k < A.length; k ++){
+            int i= k;
+            if(A[i] <= 0 || A[i] > N){
+                A[i] = 0;
+            }else if(A[i] == i + 1 ){
+                continue;
+            }else if(A[i] == A[A[i] - 1]){
+                A[i] = 0;
+            }else{
+                int tmp = A[A[i] - 1];
+                A[A[i] - 1] = A[i];
+                A[i] = tmp;
+                k--;
+            }
+        }
+        
+        int min = N;
+        int i = 0;
+        for(i = 0 ; i < A.length;i++){
+            if(A[i] == 0){
+                min = i+1;
+                break;
+            }
+        }
+        if(i == A.length){
+            min++;
+        }
+        return min;
+    }
+}

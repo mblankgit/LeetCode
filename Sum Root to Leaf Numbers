@@ -1,0 +1,43 @@
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int sumNumbers(TreeNode root) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(root == null){
+            return 0;
+        }
+        int res = 0;
+        ArrayList<Integer> results = new ArrayList<Integer>();
+        dfs(root,res,results);
+        for(Integer re : results){
+            res += re;
+        }
+        return res;
+    }
+    
+    void dfs(TreeNode node,int last,ArrayList<Integer> results){
+        if(node.left == null && node.right == null){
+            last = last* 10 + node.val;
+            results.add(last);
+            return;
+        }
+        last = last * 10 + node.val;
+        if(node.left != null){
+            dfs(node.left,last,results);
+        }
+        if(node.right != null){
+            dfs(node.right,last,results);
+        }
+        return;
+    }
+    
+    
+}
