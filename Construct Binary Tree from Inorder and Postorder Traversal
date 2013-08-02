@@ -1,0 +1,42 @@
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(inorder == null || postorder == null || inorder.length == 0){
+            return null;
+        }
+        
+        return build(inorder,0,inorder.length-1,postorder,0,postorder.length-1);
+    }
+    
+    TreeNode build(int[] a ,int starta,int enda, int[] b,int startb,int endb){
+        TreeNode root = null;
+        if(starta == enda){
+            root = new TreeNode(a[starta]);
+            return root;
+        }
+        if(enda < starta || endb < startb){
+            return null;
+        }
+        int value = b[endb];
+        for(int i = starta ; i <= enda;i++){
+            if(a[i] == value){
+                root = new TreeNode(value);
+                root.left = build(a,starta,i-1,b,startb,startb-starta+i -1);
+                root.right = build(a,i+1,enda,b,startb-starta+i,endb-1);
+                break;
+            }
+        }
+        return root;
+    }
+    
+}

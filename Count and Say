@@ -1,0 +1,38 @@
+public class Solution {
+    public String countAndSay(int n) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+          if (n <=0)  return null;
+            StringBuilder res = new StringBuilder("1");
+	        if(n >= 2){
+	            res.append("1");
+	        }
+	        if(n == 2){
+	        	return res.toString();
+	        }
+	        while (n-- > 2) {
+	           /// read the res and generate new res
+	           char last = res.charAt(0);
+	           int num = 1;
+	           StringBuilder tmp = new StringBuilder();
+	           for(int i =1; i < res.length(); i++){
+	               while(i < res.length() && res.charAt(i) == last){
+	                   i++;
+	                   num++;
+	               }
+	               tmp.append(num + "" + last);
+	               if(i < res.length()){
+	                   last = res.charAt(i);
+	                   num = 1;
+	               }else{
+	            	   num = 0;
+	               }
+	           }
+	           if(num > 0){
+	        	   tmp.append("1" + last);
+	           }
+	           res = tmp; 
+	        }
+	        return res.toString();
+    }
+}

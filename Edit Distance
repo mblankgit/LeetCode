@@ -1,0 +1,37 @@
+public class Solution {
+    public int minDistance(String word1, String word2) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(word1.equals(word2) ){
+            return 0;
+        }else if(word1.length() == 0){
+            return word2.length();
+        }else if(word2.length() == 0){
+            return word1.length();
+        }
+        
+        int M = word1.length();
+        int N = word2.length();
+        
+        int[][] moves = new int[M+1][N+1];
+        
+        for(int i = 1 ; i <= N;i++){
+            moves[0][i] = i;
+        }
+        for(int j = 1;j <=M;j++){
+            moves[j][0] = j;
+        }
+        
+        for(int i = 1 ; i <= M ;i ++){
+            for(int j = 1 ; j <= N; j++){
+                int tmp = Math.min(moves[i-1][j],moves[i][j-1]);
+                if(word1.charAt(i-1) == word2.charAt(j-1)){
+                    moves[i][j] = Math.min(moves[i-1][j-1],1+tmp);
+                }else{
+                    moves[i][j] = Math.min(1+moves[i-1][j-1],1+tmp);
+                }
+            }
+        }
+        return moves[M][N];
+    }
+}

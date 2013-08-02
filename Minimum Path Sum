@@ -1,0 +1,68 @@
+public class Solution {
+    
+    public int minPathSum(int[][] grid) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(grid == null || grid.length == 0 || grid[0].length == 0){
+            return 0;
+        }
+        int M = grid.length;
+        int N = grid[0].length;
+        int[][] res = new int[M][N];
+        res[0][0] = grid[0][0];    
+        
+        for(int i = 0;i < M;i++){
+            for(int j = 0 ; j< N; j++){
+                res[i][j] = grid[i][j];
+                int tmpa = Integer.MAX_VALUE;
+                int tmpb = Integer.MAX_VALUE;
+                if(i -1 >=0){
+                    tmpa = res[i-1][j];
+                }
+                if(j - 1 >=0){
+                    tmpb = res[i][j-1];
+                }
+                if(tmpa == Integer.MAX_VALUE && tmpb ==Integer.MAX_VALUE){
+                    continue;
+                }else{
+                    res[i][j] += Math.min(tmpa,tmpb);
+                }
+            }
+        }
+        return res[M-1][N-1];
+    }
+    
+    
+    ///dfs is not work well
+    int dfsSolution(int[][] grid){
+        ArrayList<Integer> results = new ArrayList<Integer>();
+        
+        if(grid == null || grid.length == 0 || grid[0].length == 0){
+            return 0;
+        }
+        dfs(grid,0,0,0,results);
+        int min = Integer.MAX_VALUE;
+        for(Integer re : results){
+            if(re < min){
+                min = re;
+            }
+        }
+        return min;
+    }
+    
+    void dfs(int[][] nums, int m,int n, int sum,ArrayList<Integer> results){
+        if(m == nums.length -1 && n == nums[0].length -1){
+            sum += nums[m][n];
+            results.add(sum);
+            return;
+        }
+        
+        if(m >= nums.length || n >= nums[0].length){
+            return;
+        }
+        
+        dfs(nums,m + 1,n,sum+nums[m][n],results);
+        dfs(nums,m,n+1,sum+nums[m][n],results);
+        return;
+    }
+}

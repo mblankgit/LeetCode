@@ -1,0 +1,44 @@
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public void flatten(TreeNode root) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        TreeNode head = null;
+        TreeNode tail = null;
+        if(root == null){
+            return ;
+        }   
+        
+        Stack<TreeNode> sts = new Stack<TreeNode>();
+        
+        sts.push(root);
+        
+        while(!sts.empty()){
+            TreeNode node = sts.pop();  
+            if(head == null){
+                head = node;
+                tail = node;
+            }else{
+                tail.right = node;
+                tail.left = null;
+                tail = tail.right;
+            }
+            if(node.right != null){
+                sts.push(node.right);
+            }
+            if(node.left != null){
+                sts.push(node.left);
+            }
+        }
+        root = head;
+        return ;
+    }
+}

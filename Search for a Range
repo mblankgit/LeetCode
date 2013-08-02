@@ -1,0 +1,72 @@
+public class Solution {
+    public int[] searchRange(int[] A, int target) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int[] res = new int[2];
+        res[0] = -1;
+        res[1] = -1;
+        if(A == null){
+            return res;
+        }
+        int first = searchFirst(A,target);
+        if(first == -1){
+            return res;
+        }
+        int last = searchLast(A,target);
+        res[0] = first;
+        res[1] = last;
+        return res;
+    }
+    
+    int searchFirst(int[] A,int t){
+        int high = A.length -1;
+        int low = 0;
+        while(high > low){
+            int mid = low + (high - low)/2;
+            if(A[mid] > t){
+                high = mid -1;
+            }else if(A[mid] < t){
+                low = mid+1;
+            }else{
+                if(mid == 0){
+                    return 0;
+                }else if(A[mid -1] != t){
+                    return mid;
+                }else{
+                    high = mid -1;
+                }
+            }
+        }
+        if(A[low] == t){
+            return low;
+        }else{
+            return -1;
+        }
+    }
+    
+    int searchLast(int[] A,int t){
+        int high = A.length -1;
+        int low = 0;
+        while(high > low){
+            int mid = low + (high - low)/2;
+            if(A[mid] > t){
+                high = mid -1;
+            }else if(A[mid] < t){
+                low = mid+1;
+            }else{
+                if(mid == A.length -1){
+                    return A.length -1;
+                }else if(A[mid +1] != t){
+                    return mid;
+                }else{
+                    low = mid +1;
+                }
+            }
+        }
+        if(A[low] == t){
+            return low;
+        }else{
+            return -1;
+        }
+    }
+}
