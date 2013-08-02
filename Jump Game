@@ -1,0 +1,25 @@
+public class Solution {
+    public boolean canJump(int[] A) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(A == null){
+            return false;
+        }
+        
+        int len = A.length ;
+        
+        int max = 0;
+        int index = 0;
+        while(index <= max  && index < len){
+            if(index + A[index] > max){
+                max = index + A[index];
+            }
+            index++;
+        }
+        if(max >= len -1){
+            return true;
+        }else{
+            return false;
+        }        
+    }
+}

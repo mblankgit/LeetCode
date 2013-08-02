@@ -1,0 +1,27 @@
+public class Solution {
+    public ArrayList<ArrayList<Integer>> subsetsWithDup(int[] num) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+        if(num == null || num.length == 0){
+            return res;
+        }
+        Arrays.sort(num);
+        res.add(new ArrayList<Integer>());
+        int start = 0;
+        for(int i = 0 ; i< num.length;i++){
+            int size = res.size();
+            for(int j = start ; j < size; j++){
+                ArrayList<Integer> tmp = new ArrayList<Integer>(res.get(j));
+                tmp.add(num[i]);
+                res.add(tmp);
+            }
+            if( i != num.length -1 && num[i] == num[i+1]){
+                start = size;
+            }else{
+                start = 0;
+            }            
+        }
+        return res;
+    }
+}

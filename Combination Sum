@@ -1,0 +1,34 @@
+public class Solution {
+    public ArrayList<ArrayList<Integer>> combinationSum(int[] candidates, int target) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+        if(candidates == null || candidates.length == 0){
+            return res;
+        }
+        
+        Arrays.sort(candidates);
+        ArrayList<Integer> adds = new ArrayList<Integer>();
+        combine(candidates,target,adds,res);
+        return res;        
+    }
+    
+    void combine(int[] num, int target,ArrayList<Integer> adds, ArrayList<ArrayList<Integer>> res){
+        if(target == 0 ){
+            res.add(new ArrayList<Integer>(adds));
+            return ;
+        }
+        
+        for(int i = 0 ; i < num.length; i++){
+            if(target >= num[i]){
+                if(adds.size() > 0 && adds.get(adds.size() - 1) > num[i]){
+                    continue;
+                }
+                adds.add(num[i]);
+                combine(num,target - num[i],adds,res);
+                adds.remove(adds.size() -1);
+            }
+        }
+        return ;
+    }
+}

@@ -1,0 +1,25 @@
+public class Solution {
+    public int minCut(String s) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(s.length() <= 1){
+            return 0;
+        }
+        int N = s.length();
+        int[] res = new int[s.length() +1];
+        boolean[][] palin = new boolean[N+1][N+1];
+        
+        for(int i = 0;i <= N ; i++){
+            res[i] = i -1;
+        }
+        for(int i = 0 ; i < N;i++){
+           for(int j = 0; j <= i ; j ++){
+                if(s.charAt(i) == s.charAt(j) &&(i - j < 2 || palin[j+1][i-1])){
+                    palin[j][i] = true;
+                    res[i+1] = Math.min(res[i +1],res[j] + 1);
+                }
+           } 
+        }
+        return res[N];
+    }
+}
