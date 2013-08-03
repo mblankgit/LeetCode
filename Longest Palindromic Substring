@@ -1,0 +1,51 @@
+public class Solution {
+    public String longestPalindrome(String s) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(s.length() <= 1){
+                return s;
+	    }
+	        
+        StringBuffer ns = new StringBuffer();
+        ns.append("$#");
+        for(int i = 0 ;i < s.length() ;i ++){
+            ns.append(s.charAt(i) + "#");
+        }
+        
+        int[] p = new int[ns.length()];
+        p[0] = 1;
+        
+        int max = 0;
+        int id = 0;
+        int res = -1;
+        int rid = 0;
+        for(int i = 1 ; i< ns.length();i++){
+            if(i > max){
+                p[i] = 1;
+            }else{
+                p[i] = Math.min(max - i , p[2*id - i]);
+            }
+            while(i + p[i] < ns.length() && i - p[i] >= 0 && ns.charAt(i+p[i]) == ns.charAt(i-p[i])){
+                p[i]++;
+            } 
+            if(p[i] + i > max){
+                max = p[i] + i ;
+                id = i;
+            }
+            if(p[i] > res){
+                res = p[i];
+                rid = i;
+            }
+        }        
+        int start = 0;
+        int end = 0;
+        if(rid % 2 == 0){
+        	start = (rid /2 -1) - (res -1) / 2;
+        	end = start + (res -2);
+        }else{
+        	start = (rid - (res - 2) ) /2 - 1;
+        	end = start + (res - 2);
+        }
+        return s.substring(start,end+1);
+    }
+}
