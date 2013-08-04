@@ -1,0 +1,39 @@
+public class Solution {
+    public boolean isScramble(String s1, String s2) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(s1.length() != s2.length()){
+            return false;
+        }
+        
+		///important ..
+        int[] ck = new int[26];
+        for(int i = 0;i<s1.length();i++){
+            ck[s1.charAt(i) - 'a']++;
+        }
+        
+        for(int j = 0 ; j< s2.length();j++){
+            ck[s2.charAt(j) - 'a'] --;
+        }
+        for(int i = 0 ; i < ck.length;i++){
+            if(ck[i] != 0){
+                return false;
+            }
+        }
+        
+        if(s1.length() == 1 && s2.length() == 1){
+            return true;
+        }
+        
+        for(int i = 1; i < s1.length(); i++){
+            boolean res = isScramble(s1.substring(0,i),s2.substring(0,i)) && 
+                            isScramble(s1.substring(i,s1.length()),s2.substring(i,s2.length()));
+            res = res || isScramble(s1.substring(0,i),s2.substring(s2.length() - i,s2.length())) && 
+                            isScramble(s1.substring(i,s1.length()),s2.substring(0,s2.length() - i));
+            if(res){
+                return true;
+            }
+        }
+        return false;
+    }
+}

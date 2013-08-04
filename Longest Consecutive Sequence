@@ -1,0 +1,40 @@
+public class Solution {
+    public int longestConsecutive(int[] num) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(num == null || num.length ==0){
+            return 0;
+        }
+        
+        int max = Integer.MIN_VALUE;
+        
+        Set<Integer> nums = new HashSet<Integer>();
+        List<Integer> lnums = new LinkedList<Integer>();
+        for(int n : num){
+            nums.add(n);
+            lnums.add(n);
+        }
+        
+        for(int ln : lnums){
+            int addlen = 0;
+            int mislen = 0;
+            int tmp = ln;
+            while(nums.contains(--ln)){
+                mislen++;
+                nums.remove(ln+1);
+            }
+            while(nums.contains(++tmp)){
+                addlen++;
+                nums.remove(tmp-1);
+            }
+            if(addlen + mislen > max){
+                max = addlen + mislen;
+            }
+        }
+       
+        if(max < 0){
+            max = 0;
+        }
+        return max + 1;
+    }
+}
