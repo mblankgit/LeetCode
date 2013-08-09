@@ -1,0 +1,39 @@
+public class Solution {
+    public void nextPermutation(int[] num) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(num == null || num.length <= 1){
+            return ;
+        }
+        
+        for(int i = num.length - 2; i >= 0 ; i --){
+            if(num[i] < num[i+1]){
+                for(int j = i +1;j<num.length;j++){
+                    if(j == num.length -1 || num[j + 1] <= num[i]){
+                        swap(num,i,j);
+                        reverse(num,i+1,num.length-1);
+                        return;
+                    }
+                }
+            }
+        }
+        reverse(num,0,num.length-1);
+        
+    }
+    
+    
+    void reverse(int[] num, int s, int e){
+        while(s < e){
+            swap(num,s,e);
+            s++;
+            e--;
+        }
+    }
+    
+    
+    void swap(int[] num,int l,int r){
+        int tmp = num[l];
+        num[l] = num[r];
+        num[r] = tmp;
+    }
+}

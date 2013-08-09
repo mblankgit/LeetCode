@@ -1,0 +1,19 @@
+public class Solution {
+    public int maxSubArray(int[] A) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(A == null || A.length == 0){
+            return 0;
+        }
+        int n = A.length;
+        int max = Integer.MIN_VALUE;
+        int[] res = new int[n+1];
+        int[] st = new int[n+1];
+        res[0] = A[0];
+        for(int i = 1 ; i <= n; i++){
+            st[i] = Math.max(st[i-1] + A[i-1],A[i-1]);
+            res[i] = Math.max(res[i-1],st[i]);
+        }
+        return res[n];
+    }
+}

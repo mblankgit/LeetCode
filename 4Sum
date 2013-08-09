@@ -1,0 +1,48 @@
+public class Solution {
+    public ArrayList<ArrayList<Integer>> fourSum(int[] num, int target) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+        if(num == null || num.length <= 3){
+            return res;
+        }
+        Arrays.sort(num);
+        for(int i = 0 ; i < num.length - 3; i++){
+            if(i != 0 && num[i] == num[i-1])continue;
+            for(int j = num.length -1; j > i ; j--){
+                if(j != num.length -1 && num[j] == num[j+1])continue;
+                int left = i +1;
+                int right = j-1;
+                int leftnum = target - num[i] - num[j];
+                while(right > left && left > i && right < j){
+                    if(leftnum == num[left] + num[right]){
+                        ArrayList<Integer> tmps = new ArrayList<Integer>();
+                        tmps.add(num[i]);
+                        tmps.add(num[left]);
+                        tmps.add(num[right]);
+                        tmps.add(num[j]);
+                        res.add(tmps);
+                        int tmpl = num[left];
+                        int tmpr = num[right];
+                        left++;
+                        right--;
+                        while(right >=0 && num[right] == tmpr){
+                            right--;
+                        } 
+                        while(left < num.length && num[left] == tmpl){
+                            left++;
+                        }
+                    }else if(leftnum > num[left] + num[right]){
+                        left++;
+                    }else{
+                        right--;
+                    }
+                }
+            }
+            
+        }
+        return res;   
+    }
+    
+
+}
