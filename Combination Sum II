@@ -1,0 +1,38 @@
+public class Solution {
+    public ArrayList<ArrayList<Integer>> combinationSum2(int[] num, int target) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+        if(num == null || num.length == 0){
+            return res;
+        }
+        Arrays.sort(num);
+        ArrayList<Integer> add = new ArrayList<Integer>();
+        find(num,0,num.length -1,target,add,res);
+        return res;
+    }
+    
+    void find(int[] num,int start,int end,int target,ArrayList<Integer> add,ArrayList<ArrayList<Integer>> res){
+        if(start > end){
+            return;
+        }
+        
+        for(int i = start; i <= end; i++){
+            if(i != start && num[i] == num[ i -1]){
+                continue;
+            }
+            if(num[i] > target){
+                continue;
+            }else if(num[i] == target){
+                add.add(num[i]);
+                res.add(new ArrayList<Integer>(add));
+                add.remove(add.size() -1);
+            }else{
+                add.add(num[i]);
+                find(num,i+1,end,target - num[i],add,res);
+                add.remove(add.size() -1);
+            }          
+        }
+        return;        
+    }
+}
