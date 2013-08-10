@@ -1,0 +1,32 @@
+public class Solution {
+    public void sortColors(int[] A) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(A == null || A.length == 0){
+            return;
+        }
+        
+        int w = 0;
+        int r = 0;
+        int b = A.length -1;
+        
+        for(;w<=b;){
+            if(A[w] == 0){
+                swap(A,r,w);
+                r++;
+                w++;
+            }else if(A[w]==2){
+                swap(A,w,b);
+                b--;
+            }else{
+                w++;
+            }
+        }        
+    }
+    
+    void swap(int[] num, int a , int b){
+        int tmp = num[a];
+        num[a] = num[b];
+        num[b] = tmp;
+    }
+}
