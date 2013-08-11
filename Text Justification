@@ -1,0 +1,95 @@
+public class Solution {
+    public ArrayList<String> fullJustify(String[] words, int L) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<String> res = new ArrayList<String>();
+        if(words == null || words.length == 0 || L == 0){
+            res.add("");
+            return res;
+        }
+        List<String> line = new ArrayList<String>();
+        int left = L;
+        for(int i = 0 ; i < words.length ; i++){
+            if(words[i].length() == 0){
+                continue;
+            }
+            if(line.size() == 0 && words[i].length() == L){
+                res.add(words[i]);
+                left = L;
+                line.clear();
+            }else if(line.size() == 0 && words[i].length() < L){
+                line.add(words[i]);
+                left -= words[i].length();
+            }else if(line.size() > 0){
+                if(left < words[i].length() + 1){
+                    ///build this line and clear all state
+                    res.add(buildLine(line,left));
+                    line.clear();
+                    left = L;
+                    i--;
+                }else if(left == words[i].length() + 1){
+                    line.add(words[i]);
+                    res.add(buildLine(line,0));
+                    left = L;
+                    line.clear();
+                }else{
+                    line.add(words[i]);
+                    left -= (words[i].length() + 1);
+                }
+            }            
+        }
+        if(line.size() > 0){
+            StringBuffer last = new StringBuffer();
+            for(int i = 0 ; i < line.size();i++){
+                if(i != 0){
+                    last.append(" ");
+                }
+                last.append(line.get(i));
+            }
+            for(int i = 0 ; i < left;i++){
+                last.append(" ");
+            }
+            res.add(last.toString());
+        }
+        if(L > 0 && res.size() == 0){
+            StringBuffer blank = new StringBuffer();
+            for(int i = 0 ; i < L;i++){
+                blank.append(" ");
+            }
+            res.add(blank.toString());
+        }
+        return res;
+    }
+    
+    String buildLine(List<String> sins , int left){
+        StringBuffer res = new StringBuffer();
+        if(sins.size() == 1){
+            res.append(sins.get(0));
+            for(int i = 0 ; i< left;i++){
+                res.append(" ");
+            }
+            return res.toString();
+        }
+        int ts = left + (sins.size() - 1);        
+        int avg = ts / (sins.size() -1);
+        left = ts - avg * (sins.size() - 1);
+        for(int i = 0 ; i < sins.size(); i++){
+            int n = 0;
+            if(i == 0){
+                res.append(sins.get(i));
+                continue;
+            }else {
+                n = avg;
+                if(left > 0){
+                    n++;
+                    left--;
+                }
+            }
+            for(int j = 0 ; j < n;j++){
+                res.append(" ");
+            }
+            res.append(sins.get(i));
+        }
+        return res.toString();
+    }
+}

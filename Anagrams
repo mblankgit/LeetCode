@@ -1,0 +1,35 @@
+public class Solution {
+    public ArrayList<String> anagrams(String[] strs) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<String> res = new ArrayList<String>();
+        if(strs == null || strs.length == 0){
+            return res;
+        }
+        Map<String,List<String>> mids = new HashMap<String,List<String>>();
+        for(int i = 0 ; i < strs.length ;i++){
+            String nstr = sortStr(strs[i]);
+            if(mids.containsKey(nstr)){
+                mids.get(nstr).add(strs[i]);
+            }else{
+                List<String> tmps = new ArrayList<String>();
+                tmps.add(strs[i]);
+                mids.put(nstr,tmps);
+            }
+        }
+        for(String key : mids.keySet()){
+            if(mids.get(key).size() > 1){
+                for(String vl : mids.get(key)){
+                    res.add(vl);
+                }
+            }
+        }
+        return res;
+    }
+    
+    String sortStr(String org){
+        char[] chars = org.toCharArray();
+        Arrays.sort(chars);
+        return new String(chars);
+    }
+}
