@@ -1,0 +1,35 @@
+public class Solution {
+    public double findMedianSortedArrays(int A[], int B[]) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if((A.length + B.length ) % 2 == 0){
+            return (find(A,0,A.length - 1,B,0,B.length -1,(A.length + B.length) /2 ) + 
+                        find(A,0,A.length - 1,B,0,B.length -1,(A.length + B.length) /2 +1)) / 2;
+        }else{
+            return find(A,0,A.length -1,B,0,B.length -1,(A.length + B.length)/2 + 1);
+        }
+    }
+    
+    double find(int[] a, int starta, int enda,int[] b, int startb,int endb,int k){
+        
+        if(startb > endb){
+            return a[k-1];
+        }
+        if(enda - starta < endb - startb){
+            return find(b,startb,endb,a,starta,enda,k);
+        }
+        if( k == 1){
+            return Math.min(a[starta],b[startb]);
+        }
+        int posb = Math.min(k/2,endb - startb + 1);
+        int posa = starta + k - posb;
+        
+        if(a[posa - 1] > b[posb + startb - 1]){
+            return find(a,starta,enda,b,startb + posb,endb,k-posb);
+        }else if(a[posa - 1] < b[posb + startb - 1]){
+              return find(a,posa,enda,b,startb,endb,posb);
+        }else{
+            return a[posa-1];
+        }        
+    }
+}

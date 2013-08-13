@@ -1,0 +1,36 @@
+public class Solution {
+    public String multiply(String num1, String num2) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        List<Integer> nums = new ArrayList<Integer>();
+        
+        if(num1.equals("0") || num2.equals("0")){
+            return "0";
+        }        
+        for(int i= 0 ; i < num1.length() ;i++){
+            int up = (int)(num1.charAt(num1.length() -i - 1) - '0');
+            for(int j = 0 ; j < num2.length();j++){
+                int down = (int)(num2.charAt(num2.length() - j - 1) - '0');
+                if(nums.size() < (i + j + 1)){
+                    nums.add(up * down);
+                }else{
+                    nums.set(i + j,nums.get(i+j) + up * down);
+                }
+            }            
+        }
+        Stack<Integer> sts = new Stack<Integer>();
+        StringBuffer res = new StringBuffer();
+        int add = 0;
+        for(int i = 0 ; i < nums.size();i++){
+            sts.push((nums.get(i) + add) % 10);
+            add = (nums.get(i) + add) / 10;
+        }
+        if(add > 0){
+            sts.push(add);
+        }
+        while(!sts.empty()){
+            res.append("" + sts.pop());
+        }
+        return res.toString();
+    }
+}
