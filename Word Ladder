@@ -1,0 +1,37 @@
+public class Solution {
+    
+   
+    
+    public int ladderLength(String start, String end, HashSet<String> dict) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        Queue<String> sts = new LinkedList<String>();
+        Queue<Integer> counts = new LinkedList<Integer>();
+        sts.add(start);
+        counts.add(1);
+        HashSet<String> visited = new HashSet<String>();
+        visited.add(start);
+        while(sts.peek() != null){
+            String name = sts.poll();
+            int    count = counts.poll();
+            for(int i = 0 ; i < name.length();i++){
+                for(char j = 'a' ; j<= 'z' ;j ++){
+                    if(name.charAt(i) == j){continue;}
+                    char[] atts = name.toCharArray();
+                    atts[i] = j;
+                    String nname = new String(atts);
+                    if(nname.equals(end)){
+                        count++;
+                        return count;
+                    }else if(dict.contains(nname) && !visited.contains(nname)){
+                        counts.add(count+1);
+                        sts.add(nname);
+                        visited.add(nname);
+                    }
+                }
+            }            
+        }
+        return 0;
+    }    
+    
+}

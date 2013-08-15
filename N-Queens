@@ -1,0 +1,55 @@
+public class Solution {
+    public ArrayList<String[]> solveNQueens(int n) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<String[]> res = new ArrayList<String[]>();
+        if(n == 0){
+            return res;
+        }
+        int[] nums = new int[n];
+        for(int i = 0 ; i < n; i++){
+            nums[i] = -1;
+        }
+        dfs(nums,0,res);
+        return res;
+    }
+    
+    void dfs(int[] nums,int index,ArrayList<String[]> res){
+        if(index == nums.length){
+            res.add(print(nums));
+            return;
+        }
+        for(int i = 0 ; i < nums.length; i++){
+            nums[index] = i;
+            if(isValid(nums,index)){
+                dfs(nums,index+1,res);
+            }
+        }
+        return;
+    }
+    
+    String[] print(int[] nums){
+        String[] res = new String[nums.length];
+        for(int i = 0 ; i < nums.length; i++){
+            StringBuffer tmp = new StringBuffer();
+            for(int j = 0 ; j < nums.length;j++){
+                if(nums[j] == i){
+                    tmp.append("Q");
+                }else{
+                    tmp.append(".");
+                }
+            }
+            res[i] = tmp.toString();
+        }
+        return res;
+    }
+    
+    boolean isValid(int[] nums,int index){
+        for(int i = 0 ; i <= index; i++){
+            if(i != index && (nums[index] == nums[i] || Math.abs(nums[index] - nums[i]) == Math.abs(i - index))){
+                return false;
+            }
+        }
+        return true;
+    }
+}

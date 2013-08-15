@@ -1,0 +1,41 @@
+public class Solution {
+   class output{
+       int times = 0;
+   }
+   public int totalNQueens(int n) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(n == 0 ){
+            return 0;
+        }
+        int[] nums = new int[n];
+        for(int i = 0 ; i < n ;i++){
+            nums[i] = -1;
+        }
+        output res = new output();
+        dfs(nums,0,res);
+        return res.times;
+    }
+    
+    void dfs(int[] nums,int index,output res){
+        if(index == nums.length){
+            res.times++;
+            return;
+        }
+        for(int i = 0 ;i  < nums.length; i++){
+            nums[index] = i;
+            if(isValid(nums,index)){
+                dfs(nums,index+1,res);
+            }
+        }
+    }
+    
+    boolean isValid(int[] nums,int index){
+        for(int i = 0 ; i < index;i++){
+            if(nums[i] == nums[index] || (Math.abs(nums[i] - nums[index]) == Math.abs(i - index))){
+                return false;
+            }
+        }
+        return true;
+    }
+}

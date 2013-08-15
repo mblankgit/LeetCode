@@ -1,0 +1,54 @@
+public class Solution {
+    public int maximalRectangle(char[][] matrix) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(matrix == null || matrix.length == 0){
+            return 0;
+        }
+        
+        int max = 0;
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int[] height = new int[m];
+        for(int i = 0 ; i < n;i++){
+            for(int j = 0 ; j < m; j++){
+                if(matrix[i][j] == '0'){
+                    height[j] = 0;
+                }else{
+                    height[j] ++;
+                }
+            }
+            int tmp = maxSize(height);
+            if(tmp > max){
+                max = tmp;
+            }
+        }
+        
+        return max ;
+    }
+    
+    int maxSize(int[] nums){
+        int max = 0;int i = 0;
+        Stack<Integer> sts = new Stack<Integer>();
+        for(i = 0 ; i < nums.length;i++){
+            if(sts.empty() || nums[i] >= nums[sts.peek()]){
+                sts.push(i);
+            }else{
+                while(!sts.empty() && nums[i] < nums[sts.peek()]){
+                    int size = nums[sts.pop()] * (sts.empty()?i:i - sts.peek() - 1);
+                    if(size > max){
+                        max = size;
+                    }
+                }
+                sts.push(i);
+            }
+        }
+        while(!sts.empty()){
+            int size = nums[sts.pop()] * (sts.empty() ? i : i - sts.peek() -1);
+            if(size > max){
+                max = size;
+            }
+        }
+        return max;
+    }
+}
